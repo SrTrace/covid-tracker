@@ -19,19 +19,21 @@ class App extends Component {
     }
 
     handleCountryChange = async (country) => {
-        console.log(country);
         //fetch the data
+        const fetchedData = await fetchData(country);
+
         //set the state
+        this.setState({data: fetchedData, country: country});
     }
 
     render() {
-        const {data} = this.state;
+        const {data, country} = this.state;
         return (
             <div className={styles.container}>
                 <img className={styles.image} src={image} alt="COVID-19" />
                 <Cards data={data}/>
-                <CountryPicker/>
-                <Chart/>
+                <CountryPicker handleCountryChange={this.handleCountryChange}/>
+                <Chart data={data} country={country}/>
             </div>
         );
     }
